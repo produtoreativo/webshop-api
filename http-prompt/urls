@@ -1,0 +1,89 @@
+post /rest/V1/integration/customer/token username='cmilfont\@gmail.com' password='testes147/258*369'
+get /rest/V1/carts/mine
+
+post /rest/V1/integration/customer/token username='cmilfont\@milfont.org' password='testes147/258*369'
+POST /rest/default/V1/carts/mine/items cartItem:='{"sku":"Coca Cola 2L","qty":12,"quote_id":"3"}'
+
+// curl --header "Content-Type: application/json" \
+//   --request POST \
+//   --data '{"username":"cmilfont@gmail.com","password":"testes147/258*369"}' \
+//   http://localhost:8080//rest/V1/integration/admin/token
+
+
+// curl --header "Content-Type: application/json" \
+// --header  "Authorization: Bearer eyJraWQiOiIxIiwiYWxnIjoiSFMyNTYifQ.eyJ1aWQiOjEsInV0eXBpZCI6MywiaWF0IjoxNjkwODExMDQwLCJleHAiOjE2OTA4MTQ2NDB9.UF929XRKusGhrNlnxmHxbnQqRQVJuxwIV1tG80693pA" \
+//   --request GET \
+//   http://localhost:8080//rest/V1/carts/mine
+
+// post /rest/V1/integration/customer/token username="cmilfont\@gmail.gmail" password="testes147/258*369"
+
+// curl --header "Content-Type: application/json" \
+//   --header  "Authorization: Bearer eyJraWQiOiIxIiwiYWxnIjoiSFMyNTYifQ.eyJ1aWQiOjIsInV0eXBpZCI6MywiaWF0IjoxNjkwODEzMDcxLCJleHAiOjE2OTA4MTY2NzF9.-pYqC0YP86hy2G0e8bFzXADpwg4IGYnEJ-LAvU-u6FQ" \
+//   --request POST \
+//   --data '{"cartItem":{"sku":"Coca Cola 2L","qty":12,"quote_id":"3"}}' \
+//   http://localhost:8080/rest/default/V1/carts/mine/items
+
+
+curl -X POST "http://localhost:8080/rest/V1/products/coca-cola-2l/media" \
+     -H "Authorization: Bearer eyJraWQiOiIxIiwiYWxnIjoiSFMyNTYifQ.eyJ1aWQiOjEsInV0eXBpZCI6MiwiaWF0IjoxNjkxMDA1MjcwLCJleHAiOjE2OTEwMDg4NzB9.WFIUh66slKG71wjDipf1lZXKVeieV3YrOX0czkxaWZY" \
+     -H "Content-Type: application/json" \
+     -d '{
+       "entry": {
+         "media_type": "image",
+         "label": "Cover",
+         "position": 0,
+         "types": ["image", "small_image", "thumbnail"],
+         "disabled": false,
+        "content": {
+          "type": "image/png",
+          "name": "000000000001010250.png",
+          "base64EncodedData": "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"
+        }
+       }
+     }'
+
+
+post /rest/V1/integration/admin/token username='user' password='bitnami1'
+Content-Type:application/json
+'Authorization: Bearer eyJraWQiOiIxIiwiYWxnIjoiSFMyNTYifQ.eyJ1aWQiOjEsInV0eXBpZCI6MiwiaWF0IjoxNjkxMjM3MjE0LCJleHAiOjE2OTEyNDA4MTR9.hFVF2XGtM8uLgtQmyszxCWxfnCPvQ98uoryXuhCHIVE'
+post /rest/V1/products/coca-cola-600ml/media entry:='{"media_type": "imageimage/jpg","label": "Cover","position": 0,"types": ["image"],"file": "https://caminho-da-imagem.com.br/imagem.jpg","disabled": false}'
+
+bitnami/magento/bin/magento setup:config:set --enable-debug-logging=true
+bitnami/magento/bin/magento dev:query-log:enable
+bitnami/magento/bin/magento cache:flush
+
+bitnami/magento/bin/magento setup:config:set --enable-debug-logging=false
+bitnami/magento/bin/magento dev:query-log:disable
+bitnami/magento/bin/magento cache:flush
+
+tail -n 20 bitnami/magento/var/log/debug.log
+
+watch tail -n 15 bitnami/magento/var/log/debug.log
+
+
+# fechar pedido
+post /rest/V1/integration/customer/token username='cmilfont\@gmail.com' password='testes147/258*369'
+Content-Type:application/json
+'Authorization: Bearer eyJraWQiOiIxIiwiYWxnIjoiSFMyNTYifQ.eyJ1aWQiOjEsInV0eXBpZCI6MywiaWF0IjoxNjkxMjM3MTU4LCJleHAiOjE2OTEyNDA3NTh9.IevQelYMq2G6QHYYiJW1_I5vkjUX8cPEOBpGF8-qttQ'
+get /rest/V1/carts/mine
+POST /rest/default/V1/carts/mine/items cartItem:='{"sku":"coca-cola-2l","qty":12,"quote_id":"3"}'
+POST /rest/default/V1/carts/mine/estimate-shipping-methods
+POST /rest/default/V1/carts/mine/shipping-information addressInformation:='{ "shipping_address": { "region": "New York", "region_id": 43, "region_code": "NY", "country_id": "US", "street": [ "123 Oak Ave" ], "postcode": "10577", "city": "Purchase", "firstname": "Jane", "lastname": "Doe", "email": "jdoe@example.com", "telephone": "512-555-1111" }, "billing_address": { "region": "New York", "region_id": 43, "region_code": "NY", "country_id": "US", "street": [ "123 Oak Ave" ], "postcode": "10577", "city": "Purchase", "firstname": "Jane", "lastname": "Doe", "email": "jdoe@example.com", "telephone": "512-555-1111" }, "shipping_carrier_code": "tablerate", "shipping_method_code": "bestway" }'
+POST /rest/default/V1/carts/mine/payment-information paymentMethod:='{"method": "checkmo"}'
+
+
+# retorna o quoteID
+POST /rest/default/V1/carts/mine
+POST /rest/default/V1/carts/mine/items cartItem:='{"sku":"coca-cola-2l","qty":24,"quote_id":"5"}'
+POST /rest/default/V1/carts/mine/items cartItem:='{"sku":"coca-cola-600ml","qty":24,"quote_id":"5"}'
+POST /rest/default/V1/carts/mine/shipping-information addressInformation:='{ "shipping_address": { "region": "New York", "region_id": 43, "region_code": "NY", "country_id": "US", "street": [ "123 Oak Ave" ], "postcode": "10577", "city": "Purchase", "firstname": "Christiano", "lastname": "Almeida", "email": "cmilfont@gmail.com", "telephone": "512-555-1111" }, "billing_address": { "region": "New York", "region_id": 43, "region_code": "NY", "country_id": "US", "street": [ "123 Oak Ave" ], "postcode": "10577", "city": "Purchase", "firstname": "Jane", "lastname": "Doe", "email": "cmilfont@gmail.com", "telephone": "512-555-1111" }, "shipping_carrier_code": "tablerate", "shipping_method_code": "bestway" }'
+
+# Como admin
+get /rest/V1/orders/2
+# Pega o item_id que é o id do item do pedido
+POST /rest/default/V1/order/2/invoice capture:=true notify:=true items:='[{"order_item_id":2,"qty":12}]'
+
+
+GET /rest/default/V1/carts/5/payment-methods
+
+POST /rest/default/V1/carts/5/estimate-shipping-methods address:='{ "region": "New York", "region_id": 43, "region_code": "NY", "country_id": "US", "street": [ "123 Oak Ave" ], "postcode": "10577", "city": "Purchase", "firstname": "Christiano", "lastname": "Almeida", "email": "cmilfont@gmail.com", "telephone": "512-555-1111" }'

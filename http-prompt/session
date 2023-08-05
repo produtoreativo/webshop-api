@@ -1,0 +1,3 @@
+cd http://localhost:8080
+'Authorization: Bearer eyJraWQiOiIxIiwiYWxnIjoiSFMyNTYifQ.eyJ1aWQiOjIsInV0eXBpZCI6MywiaWF0IjoxNjkwODE2ODM2LCJleHAiOjE2OTA4MjA0MzZ9.jV1jXAmxeWX1rFmaP2GoD1Y0bXCwpMwbnXr9dj7csV8'
+Content-Type:application/json
