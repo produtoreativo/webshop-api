@@ -5,8 +5,8 @@ import { HttpService } from '@nestjs/axios';
 @Injectable()
 export class AppService {
   constructor(private readonly httpService: HttpService) {}
-  
-  getOrder(id: string) {
+
+  getOrder(id: string, accessToken: string) {
     throw new Error('Method not implemented.');
   }
   async getProducts(query: string) {
@@ -18,7 +18,7 @@ export class AppService {
       console.log(e);
     }
   }
-  createOrder(orderDto: OrderDto) {
+  createOrder(orderDto: OrderDto, accessToken: string) {
     throw new Error('Method not implemented.');
   }
 }
