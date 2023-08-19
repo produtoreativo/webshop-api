@@ -1,5 +1,5 @@
 type OrderDto = {
-  id: number;
+  sku: string;
 };
 
 export default OrderDto;
