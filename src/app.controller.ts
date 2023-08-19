@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { AppService } from './app.service';
 import OrderDto from './OrderDto';
 import { ApiBearerAuth } from '@nestjs/swagger';
@@ -9,11 +17,14 @@ import { AuthGuard } from './auth/auth.guard';
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard)
+  // @ApiBearerAuth()
+  // @UseGuards(AuthGuard)
   @Post('order')
-  async login(@GetUserToken() accessToken: string, @Body() orderDto: OrderDto) {
-    return this.appService.createOrder(orderDto, accessToken);
+  async createOrder(
+    // @GetUserToken() accessToken: string,
+    @Body() orderDto: OrderDto) {
+      console.log('Controller:',  orderDto);
+    return this.appService.createOrder(orderDto);
   }
 
   @Get('products')

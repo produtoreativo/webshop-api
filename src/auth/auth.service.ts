@@ -53,6 +53,7 @@ export class AuthService {
       .pipe(
         catchError((error) => {
           this.logger.error(error?.response?.data?.message);
+          console.log(error?.response?.data);
           throw new BadRequestException('Error on register');
         }),
       );

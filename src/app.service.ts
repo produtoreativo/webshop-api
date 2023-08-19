@@ -25,12 +25,14 @@ export class AppService {
     }
   }
 
-  async createOrder(orderDto: OrderDto, accessToken: string) {
+  async createOrder(orderDto: OrderDto) {
     const apiURL = `http://localhost:3002/order`;
+    console.log('Service: ', orderDto);
     try {
       const response = await this.httpService.axiosRef.post(
         apiURL,
-        JSON.stringify(orderDto),
+        orderDto,
+        // JSON.stringify(orderDto),
       );
       return response.data;
     } catch (e) {
