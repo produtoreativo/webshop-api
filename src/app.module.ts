@@ -7,7 +7,12 @@ import { ProductModule } from './product/product.module';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [ConfigModule, GlobalHttpModule, AuthModule, ProductModule],
+  imports: [
+    ConfigModule.forRoot({ isGlobal: true }),
+    GlobalHttpModule,
+    AuthModule,
+    ProductModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })
