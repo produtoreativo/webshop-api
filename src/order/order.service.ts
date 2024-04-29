@@ -14,4 +14,9 @@ export class OrderService {
     const ORDER_MNGT_API_URL = this.configService.get('ORDER-MNGT-API_URL');
     return this.httpService.axiosRef.post(ORDER_MNGT_API_URL, createOrderDto);
   }
+
+  async listOne(orderId) {
+    const ORDER_MNGT_API_URL = this.configService.get('ORDER-MNGT-API_URL');
+    return this.httpService.axiosRef.get(ORDER_MNGT_API_URL) || [];
+  }
 }

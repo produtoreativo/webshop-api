@@ -32,4 +32,8 @@ describe('OrdersController (e2e)', () => {
         })
     );
   });
+
+  it('/orders/:id (GET)', () => {
+    return request(app.getHttpServer()).get('/orders/1').expect(200);
+  });
 });
