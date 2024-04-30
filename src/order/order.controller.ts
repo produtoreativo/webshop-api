@@ -12,7 +12,7 @@ export class OrderController {
   }
 
   @Get(':id')
-  async listOne(@Param('id') orderId: string) {
-    return this.orderService.listOne(orderId);
+  async findOne(@Param('id') orderId: string) {
+    return this.orderService.findOne(orderId);
   }
 }

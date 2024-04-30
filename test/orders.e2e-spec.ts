@@ -12,7 +12,7 @@ describe('OrdersController (e2e)', () => {
       imports: [AppModule],
     })
       .overrideProvider(OrderService)
-      .useValue({ create: () => ({ id: 1 }) })
+      .useValue({ create: () => ({ id: 1 }), findOne: () => ({ id: 1 }) })
       .compile();
 
     app = moduleFixture.createNestApplication();
