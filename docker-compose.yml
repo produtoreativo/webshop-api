@@ -1,0 +1,16 @@
+services:
+
+  webshop-api:
+    container_name: webshop-api
+    image: webshop-api
+    restart: unless-stopped
+    build:
+      context: ./
+      dockerfile: Dockerfile
+      target: development
+    volumes:
+      - ./:/app
+      - /app/node_modules
+    ports:
+      - 3000:3000
+    command: npx nest start --watch

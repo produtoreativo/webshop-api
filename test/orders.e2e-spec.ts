@@ -12,7 +12,7 @@ describe('OrdersController (e2e)', () => {
       imports: [AppModule],
     })
       .overrideProvider(OrderService)
-      .useValue({ create: () => ({ id: 1 }) })
+      .useValue({ create: () => ({ id: 1 }), findOne: () => ({ id: 1 }) })
       .compile();
 
     app = moduleFixture.createNestApplication();
@@ -31,5 +31,9 @@ describe('OrdersController (e2e)', () => {
           expect(body.id).toBeDefined();
         })
     );
+  });
+
+  it('/orders/:id (GET)', () => {
+    return request(app.getHttpServer()).get('/orders/1').expect(200);
   });
 });
