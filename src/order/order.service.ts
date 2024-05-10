@@ -15,12 +15,12 @@ export class OrderService {
     private readonly httpService: HttpService,
   ) {}
 
-  create(createOrderDto: CreateOrderDto) {
+  create(accessToken: string, createOrderDto: CreateOrderDto) {
     const ORDER_MNGT_API_URL = this.configService.get('ORDER_MNGT_API_URL');
     return this.httpService.axiosRef.post(ORDER_MNGT_API_URL, createOrderDto);
   }
 
-  async findOne(orderId: string) {
+  async findOne(accessToken: string, orderId: string) {
     const ORDER_MNGT_API_URL = this.configService.get('ORDER_MNGT_API_URL');
     return this.httpService
       .get(`${ORDER_MNGT_API_URL}/orders/${orderId}`)
