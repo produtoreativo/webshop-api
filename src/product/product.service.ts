@@ -11,7 +11,9 @@ export class ProductService {
   async listAll() {
     const SEARCH_API_URL = this.configService.get('SEARCH_API_URL');
     try {
-      const response = await this.httpService.axiosRef.get(SEARCH_API_URL);
+      const response = await this.httpService.axiosRef.get(
+        `${SEARCH_API_URL}/search/all`,
+      );
       return response.data || {};
     } catch (error) {
       console.error(error);
