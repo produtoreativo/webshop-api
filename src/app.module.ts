@@ -6,9 +6,11 @@ import { GlobalHttpModule } from './global-http/global-http.module';
 import { ProductModule } from './product/product.module';
 import { ConfigModule } from '@nestjs/config';
 import { OrderModule } from './order/order.module';
+import { ApmModule } from 'elastic-apm-nest';
 
 @Module({
   imports: [
+    ApmModule.forRootAsync(),
     ConfigModule.forRoot({ isGlobal: true }),
     GlobalHttpModule,
     AuthModule,
