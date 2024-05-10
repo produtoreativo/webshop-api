@@ -33,7 +33,7 @@ export class RegisterDto {
   @ApiProperty()
   @IsNotEmpty()
   lastname: string;
-  @ApiProperty()
+  // @ApiProperty()
   @IsOptional()
   address: AddressDto;
 }

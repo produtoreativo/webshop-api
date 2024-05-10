@@ -13,4 +13,8 @@ services:
       - /app/node_modules
     ports:
       - 3000:3000
+    environment:
+      - SEARCH_API_URL=http://search-api:3001
+      - ORDER_MNGT_API_URL=http://order-mngt-api:3002
+      - MAGENTO_URL=http://magento:8080
     command: npx nest start --watch
