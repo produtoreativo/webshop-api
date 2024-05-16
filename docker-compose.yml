@@ -40,6 +40,5 @@ services:
       resources:
         limits:
           cpus: '1'
-          memory: 256M
-    command: npx nest start --watch
-
+          memory: 512M
+    command: "sh -c '/entrypoint.sh && npm run start:dev'"
