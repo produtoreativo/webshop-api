@@ -96,22 +96,6 @@ export class AuthService {
         password: MAGENTO_ADMIN_PASSWORD,
       },
     };
-    const response = await this.httpService.axiosRef.request(payload);
-    return response?.data;
-    // .pipe(
-    //   map((response) => {
-    //     return {
-    //       accessToken: response.data,
-    //       createdAt: Date.now(),
-    //       expireIn: '4h',
-    //     };
-    //   }),
-    // )
-    // .pipe(
-    //   catchError((error) => {
-    //     this.logger.error(error?.response?.data?.message);
-    //     throw new BadRequestException('Error on get Admin Access Token');
-    //   }),
-    // );
+    return (await this.httpService.axiosRef.request(payload)).data;
   }
 }
