@@ -80,31 +80,22 @@ export class AuthService {
       );
   }
 
-  async getAdminAccessToken(){
-    const MAGENTO_ADMIN_USERNAME = this.configService.get('MAGENTO_ADMIN_USERNAME')
-    const MAGENTO_ADMIN_PASSWORD = this.configService.get('MAGENTO_ADMIN_PASSWORD')
+  async getAdminAccessToken() {
+    const MAGENTO_ADMIN_USERNAME = this.configService.get(
+      'MAGENTO_ADMIN_USERNAME',
+    );
+    const MAGENTO_ADMIN_PASSWORD = this.configService.get(
+      'MAGENTO_ADMIN_PASSWORD',
+    );
 
     const payload: AxiosRequestConfig = {
       method: 'POST',
       url: this.baseUrl + '/rest/V1/integration/admin/token',
-      data: { username: MAGENTO_ADMIN_USERNAME, password:  MAGENTO_ADMIN_PASSWORD},
+      data: {
+        username: MAGENTO_ADMIN_USERNAME,
+        password: MAGENTO_ADMIN_PASSWORD,
+      },
     };
-    return this.httpService
-      .request(payload)
-      .pipe(
-        map((response) => {
-          return {
-            accessToken: response.data,
-            createdAt: Date.now(),
-            expireIn: '4h',
-          };
-        }),
-      )
-      .pipe(
-        catchError((error) => {
-          this.logger.error(error?.response?.data?.message);
-          throw new BadRequestException('Error on get Admin Access Token');
-        }),
-      );
+    return (await this.httpService.axiosRef.request(payload)).data;
   }
 }

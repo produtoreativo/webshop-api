@@ -11,7 +11,7 @@ import { AuthService } from '../auth/auth.service';
 export class OrderController {
   constructor(
     private readonly orderService: OrderService,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
   ) {}
 
   @ApiBearerAuth()
@@ -33,10 +33,9 @@ export class OrderController {
     @Param('id') orderId: string,
   ) {
     // Obter um token de admin
-    const { accessToken } = await this.authService.getAdminAccessToken()
+    const adminAccessToken = await this.authService.getAdminAccessToken();
 
-
-    const order = await this.orderService.findOne(accessToken, orderId);
+    const order = await this.orderService.findOne(adminAccessToken, orderId);
 
     // validação ownership
   }
