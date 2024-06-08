@@ -1,17 +1,17 @@
 import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from '../auth/auth.guard';
+import { AuthService } from '../auth/auth.service';
+import { GetUserToken } from '../auth/get-user-token.decorator';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { OrderService } from './order.service';
-import { GetUserToken } from '../auth/get-user-token.decorator';
-import { AuthGuard } from '../auth/auth.guard';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { AuthService } from '../auth/auth.service';
 
 @ApiTags('Orders')
 @Controller('orders')
 export class OrderController {
   constructor(
     private readonly orderService: OrderService,
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
   ) {}
 
   @ApiBearerAuth()
@@ -33,10 +33,9 @@ export class OrderController {
     @Param('id') orderId: string,
   ) {
     // Obter um token de admin
-    const { accessToken } = await this.authService.getAdminAccessToken()
+    const adminAccessToken = await this.authService.getAdminAccessToken();
 
-
-    const order = await this.orderService.findOne(accessToken, orderId);
+    const order = await this.orderService.findOne(adminAccessToken, orderId);
 
     // validação ownership
   }
