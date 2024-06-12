@@ -1,13 +1,19 @@
 import { HttpService } from '@nestjs/axios';
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { AxiosRequestConfig } from 'axios';
+import { AxiosError, AxiosRequestConfig } from 'axios';
 import { catchError, map } from 'rxjs';
 import { LoginDto } from './login.dto';
 import { RegisterDto } from './register.dto';
 
+interface AdminAccess {
+  token: string;
+  createdAt: Date;
+}
+
 @Injectable()
 export class AuthService {
+  private adminAccess: AdminAccess;
   private readonly logger = new Logger(AuthService.name);
   private baseUrl: string;
   constructor(
@@ -59,25 +65,22 @@ export class AuthService {
   }
 
   async getUser(token: string) {
-    const payload: AxiosRequestConfig = {
+    const requestParams: AxiosRequestConfig = {
       url: this.baseUrl + '/rest/V1/customers/me',
       method: 'GET',
       headers: {
         Authorization: `Bearer ${token}`,
       },
     };
-    return this.httpService
-      .request<{
-        id: number;
-        email: string;
-      }>(payload)
-      .pipe(map((response) => response.data))
-      .pipe(
-        catchError((error) => {
-          this.logger.error(error?.response?.data?.message);
-          throw new BadRequestException('Error on get user info');
-        }),
+    try {
+      const response = await this.httpService.axiosRef.request(requestParams);
+      return response.data;
+    } catch (error) {
+      this.logger.error(
+        'Error on get user info',
+        error?.response?.data?.message,
       );
+    }
   }
 
   async getAdminAccessToken() {
@@ -88,14 +91,32 @@ export class AuthService {
       'MAGENTO_ADMIN_PASSWORD',
     );
 
-    const payload: AxiosRequestConfig = {
-      method: 'POST',
-      url: this.baseUrl + '/rest/V1/integration/admin/token',
-      data: {
-        username: MAGENTO_ADMIN_USERNAME,
-        password: MAGENTO_ADMIN_PASSWORD,
-      },
-    };
-    return (await this.httpService.axiosRef.request(payload)).data;
+    if (!this.adminAccess) {
+      const payload: AxiosRequestConfig = {
+        method: 'POST',
+        url: this.baseUrl + '/rest/V1/integration/admin/token',
+        data: {
+          username: MAGENTO_ADMIN_USERNAME,
+          password: MAGENTO_ADMIN_PASSWORD,
+        },
+      };
+      this.adminAccess = {
+        token: (await this.httpService.axiosRef.request(payload)).data,
+        createdAt: new Date(),
+      };
+      return this.adminAccess.token;
+    }
+
+    const now = new Date();
+    const diff = now.getTime() - this.adminAccess.createdAt.getTime();
+    const FOUR_HOURS = 4 * 60 * 60 * 1000;
+
+    if (diff >= FOUR_HOURS) {
+      this.adminAccess = undefined;
+
+      return this.getAdminAccessToken();
+    }
+
+    return this.adminAccess.token;
   }
 }
