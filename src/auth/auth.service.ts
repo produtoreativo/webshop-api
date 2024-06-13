@@ -1,10 +1,10 @@
 import { HttpService } from '@nestjs/axios';
 import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { AxiosError, AxiosRequestConfig } from 'axios';
+import { AxiosRequestConfig } from 'axios';
 import { catchError, map } from 'rxjs';
-import { LoginDto } from './login.dto';
-import { RegisterDto } from './register.dto';
+import { LoginDto } from './dto/login.dto';
+import { RegisterDto } from './dto/register.dto';
 
 interface AdminAccess {
   token: string;

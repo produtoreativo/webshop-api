@@ -20,17 +20,17 @@ class AddressDto {
 }
 
 export class RegisterDto {
-  @ApiProperty()
+  @ApiProperty({ example: 'jack@doe.com' })
   @IsNotEmpty()
   @IsEmail()
   email: string;
-  @ApiProperty()
+  @ApiProperty({ example: 'Password1' })
   @IsNotEmpty()
   password: string;
-  @ApiProperty()
+  @ApiProperty({ example: 'Jack' })
   @IsNotEmpty()
   firstname: string;
-  @ApiProperty()
+  @ApiProperty({ example: 'Doe' })
   @IsNotEmpty()
   lastname: string;
   // @ApiProperty()
