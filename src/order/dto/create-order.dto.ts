@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   ArrayNotEmpty,
@@ -8,13 +9,16 @@ import {
 } from 'class-validator';
 
 class OrderItemDto {
+  @ApiProperty()
   @IsNotEmpty()
   sku: string;
+  @ApiProperty()
   @IsPositive()
-  quantity: number;
+  qty: number;
 }
 
 export class CreateOrderDto {
+  @ApiProperty({ type: [OrderItemDto] })
   @IsArray()
   @ArrayNotEmpty()
   @ValidateNested()
