@@ -29,7 +29,9 @@ export class AppController {
 
   @Get('products')
   async getProducts(@Query('query') query: string) {
-    return this.appService.getProducts(query);
+    const products = await this.appService.getProducts(query);
+    console.log(products)
+    return products;
   }
 
   @ApiBearerAuth()

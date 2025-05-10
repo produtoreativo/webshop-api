@@ -18,7 +18,9 @@ export class AppService {
     const apiURL = `http://localhost:3001/search?query=${query}`;
     try {
       const response = await this.httpService.axiosRef.get(apiURL);
+      // const data = JSON.parse(response.data);
       this.logger.info('DATA ****', response.data);
+      // console.warn('DATA ****', data)
       return response.data;
     } catch (e) {
       this.logger.error(e);
