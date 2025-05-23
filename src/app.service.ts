@@ -14,6 +14,7 @@ export class AppService {
   getOrder(id: string, accessToken: string) {
     throw new Error('Method not implemented.');
   }
+
   async getProducts(query: string) {
     const apiURL = `http://localhost:3001/search?query=${query}`;
     try {

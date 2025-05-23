@@ -34,8 +34,8 @@ export class AppController {
     return products;
   }
 
-  @ApiBearerAuth()
-  @UseGuards(AuthGuard)
+  // @ApiBearerAuth()
+  // @UseGuards(AuthGuard)
   @Get('order/:id')
   async getOrder(
     @GetUserToken() accessToken: string,

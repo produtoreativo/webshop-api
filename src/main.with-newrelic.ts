@@ -1,0 +1,2 @@
+import 'newrelic';
+import './main';
