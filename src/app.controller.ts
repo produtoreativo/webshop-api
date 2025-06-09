@@ -22,15 +22,18 @@ export class AppController {
   @Post('order')
   async createOrder(
     // @GetUserToken() accessToken: string,
-    @Body() orderDto: OrderDto) {
-      console.log('Controller:',  orderDto);
+    @Body() orderDto: OrderDto,
+  ) {
+    console.log('Controller:', orderDto);
     return this.appService.createOrder(orderDto);
   }
 
   @Get('products')
   async getProducts(@Query('query') query: string) {
     const products = await this.appService.getProducts(query);
-    console.log(products)
+    if (!products || products.length === 0) {
+      throw new Error('No products found');
+    }
     return products;
   }
 

@@ -11,8 +11,11 @@ export class AppService {
     private readonly logger: PinoLogger,
   ) {}
 
-  getOrder(id: string, accessToken: string) {
-    throw new Error('Method not implemented.');
+  async getOrder(id: string, accessToken: string) {
+    const apiURL = `http://localhost:3001/error`;
+    console.log('apiURL', apiURL);
+    const response = await this.httpService.axiosRef.get(apiURL);
+    return response.data;
   }
 
   async getProducts(query: string) {
