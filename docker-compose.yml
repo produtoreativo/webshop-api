@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  datadog:
+    image: datadog/agent:latest
+    container_name: datadog-agent
+    environment:
+      - DD_API_KEY=${DD_API_KEY}       # forneça via .env ou direto no ambiente
+      - DD_SITE=datadoghq.com          # ou datadoghq.eu, us3, etc.
+      - DD_APM_ENABLED=true
+      - DD_LOGS_ENABLED=true
+      - DD_LOGS_CONFIG_CONTAINER_COLLECT_ALL=true
+      - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true
+      - DD_PROCESS_AGENT_ENABLED=true
+      - DD_CONTAINER_EXCLUDE=name:datadog-agent
+      - DD_ENV=development
+      - DD_TAGS=env:development,service:datadog-agent
+    ports:
+      - "8126:8126"   # APM (dd-trace envia pra cá)
+      - "8125:8125/udp"  # DogStatsD
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+  # nestjs:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   container_name: nestjs-app
+  #   depends_on:
+  #     - datadog
+  #   environment:
+  #     - DD_AGENT_HOST=datadog
+  #     - DD_TRACE_AGENT_PORT=8126
+  #     - DD_ENV=development
+  #     - DD_SERVICE=nestjs-api
+  #     - DD_VERSION=1.0.0
+  #     - NODE_ENV=development
+  #   ports:
+  #     - "3000:3000"

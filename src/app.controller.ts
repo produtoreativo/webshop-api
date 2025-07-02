@@ -46,4 +46,28 @@ export class AppController {
   ) {
     return this.appService.getOrder(orderId, accessToken);
   }
+
+  @Get('glenio')
+  async getGlenio(
+    @GetUserToken() accessToken: string,
+    @Param('id') orderId: string,
+  ) {
+    throw new Error('This is a test error from Glenio');
+  }
+
+  @Get('glenio2')
+  async getGlenio2(
+    @GetUserToken() accessToken: string,
+    @Param('id') orderId: string,
+  ) {
+    return {
+      name: 'Glenio',
+      accessToken,
+      orderId,
+      additionalInfo: 'Some additional info',
+      timestamp: new Date().toISOString(),
+      message: 'Hello from Glenio!',
+      status: 'success',
+    };
+  }
 }

@@ -6,8 +6,7 @@ import {
   Logger,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-import * as newrelic from 'newrelic';
-
+import tracer from 'dd-trace';
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {
   private readonly logger = new Logger(AllExceptionsFilter.name);
@@ -23,9 +22,21 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const message =
       exception instanceof HttpException ? exception.getResponse() : exception;
 
-    newrelic.noticeError(exception as Error);
-
     this.logger.error(`Exception: ${JSON.stringify(message)}`);
+
+    // 🎯 Datadog trace enhancement
+    const span = tracer.scope().active();
+    if (span) {
+      span.setTag('error', true);
+
+      if (exception instanceof Error) {
+        span.setTag('error.message', exception.message);
+        span.setTag('error.stack', exception.stack);
+        span.setTag('error.type', exception.name);
+      } else {
+        span.setTag('error.message', JSON.stringify(message));
+      }
+    }
 
     response.status(status).json({
       statusCode: status,
