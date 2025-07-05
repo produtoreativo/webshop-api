@@ -24,7 +24,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
 
     this.logger.error(`Exception: ${JSON.stringify(message)}`);
 
-    // 🎯 Datadog trace enhancement
+    // Datadog trace enhancement
     const span = tracer.scope().active();
     if (span) {
       span.setTag('error', true);
