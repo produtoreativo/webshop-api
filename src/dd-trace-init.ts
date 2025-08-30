@@ -26,7 +26,7 @@ tracer.use('express');
 export async function readyTracer(): Promise<void> {
   return new Promise((resolve) => {
     setTimeout(() => {
-      console.log('✅ Datadog tracer estabilizado')
+      console.log('✅ Datadog tracer estabilizado');
       resolve();
     }, 50); // pode ajustar para 20~100ms se necessário
   });

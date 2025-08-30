@@ -5,6 +5,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { GlobalHttpModule } from './global-http/global-http.module';
 import { ConfigModule } from '@nestjs/config';
+import { GroupBuyingModule } from './group-buying/group-buying.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { ConfigModule } from '@nestjs/config';
     LoggerModule.forRoot(),
     GlobalHttpModule,
     AuthModule,
+    GroupBuyingModule,
   ],
   controllers: [AppController],
   providers: [AppService],
