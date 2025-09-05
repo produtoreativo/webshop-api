@@ -15,9 +15,9 @@
     "start:watch:dd2": "npm run start:dev --entryFile main.with-dd",
     "start:watch:dd": "ts-node --respawn --transpile-only src/main.with-dd.ts",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "jest",
+    "test": "jest --config ./test/jest-e2e.json",
     "test:watch": "jest --watch",
-    "test:cov": "jest --coverage",
+    "test:cov": "jest --coverage --config ./test/jest-e2e.json",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --watch --config ./test/jest-e2e.json --detectOpenHandles"
   },
