@@ -1,4 +1,7 @@
-import 'dotenv/config';
+// import 'dotenv/config';
+import * as dotenv from 'dotenv';
+dotenv.config({ path: '.env' });
+
 import tracer from 'dd-trace';
 
 console.log('Initializing Datadog tracer...');
@@ -19,8 +22,9 @@ tracer.init({
 });
 tracer.use('http');
 tracer.use('express');
+tracer.use('jest', true);
 
-// export default tracer;
+export default tracer;
 
 // Garantia mínima para setup interno do tracer (via plugins)
 export async function readyTracer(): Promise<void> {

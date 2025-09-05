@@ -1,0 +1,181 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Order Management API - Group Purchase",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/order/group": {
+      "post": {
+        "summary": "Cria um pedido de compra em grupo",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "userId": { "type": "string" },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "productId": { "type": "string" },
+                        "qty": { "type": "integer" }
+                      },
+                      "required": ["productId", "qty"]
+                    }
+                  }
+                },
+                "required": ["userId", "items"]
+              },
+              "example": {
+                "userId": "u1",
+                "items": [
+                  { "productId": "p1", "qty": 2 },
+                  { "productId": "p2", "qty": 1 }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Pedido de compra em grupo criado com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "orderId": { "type": "string" },
+                    "userId": { "type": "string" },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "productId": { "type": "string" },
+                          "qty": { "type": "integer" }
+                        }
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "orderId": "g123",
+                  "userId": "u1",
+                  "items": [
+                    { "productId": "p1", "qty": 2 },
+                    { "productId": "p2", "qty": 1 }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro de validação: payload inválido",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": { "type": "string", "example": "https://example.com/problems/invalid-payload" },
+                    "title": { "type": "string", "example": "Invalid payload" },
+                    "status": { "type": "integer", "example": 400 },
+                    "detail": { "type": "string", "example": "O campo items é obrigatório." },
+                    "instance": { "type": "string", "example": "/order/group" }
+                  },
+                  "required": ["type", "title", "status", "detail"]
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type":   { "type": "string" },
+                    "title":  { "type": "string" },
+                    "status": { "type": "integer" },
+                    "detail": { "type": "string" },
+                    "instance": { "type": "string" }
+                  },
+                  "required": ["title","status"]
+                },
+                "examples": {
+                  "crashError": {
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Alguma sobrecarga nos acessos, tente novamente em instantes",
+                      "status": 503,
+                      "detail": "Alguma sobrecarga nos acessos, tente novamente em instantes",
+                      "instance": "/order/group"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Erro interno do servidor",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type":   { "type": "string" },
+                    "title":  { "type": "string" },
+                    "status": { "type": "integer" },
+                    "detail": { "type": "string" },
+                    "instance": { "type": "string" }
+                  },
+                  "required": ["title","status"]
+                },
+                "examples": {
+                  "serverError": {
+                    "value": {
+                      "type": "about:blank",
+                      "title": "Algo inesperado aconteceu, tente novamente em instantes",
+                      "status": 500,
+                      "detail": "Falha ao processar o pedido de compra em grupo",
+                      "instance": "/order/group"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Erro não especificado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": { "type": "string" },
+                    "title": { "type": "string" },
+                    "status": { "type": "integer" },
+                    "detail": { "type": "string" },
+                    "instance": { "type": "string" }
+                  },
+                  "required": ["type", "title", "status", "detail"]
+                },
+                "example": {
+                  "type": "https://example.com/problems/unexpected",
+                  "title": "Unexpected error",
+                  "status": 500,
+                  "detail": "Algo inesperado aconteceu, tente novamente em instantes",
+                  "instance": "/order/group"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
