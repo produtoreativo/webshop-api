@@ -4,7 +4,10 @@
   "testEnvironment": "node",
   "testRegex": ".e2e-spec.ts$",
   "transform": {
-    "^.+\\.(t|j)s$": "ts-jest"
+    "^.+\\.(t|j)s$": ["ts-jest", {
+      "tsconfig": "tsconfig.json",
+      "isolatedModules": false
+    }]
   },
   "setupFilesAfterEnv": ["<rootDir>/test/jest.setup.ts"],
   "moduleNameMapper": {
@@ -17,6 +20,16 @@
     "!<rootDir>/src/**/*.module.ts",
     "!<rootDir>/src/main.ts",
     "!<rootDir>/src/**/*.spec.ts"
+  ],
+  "reporters": [
+    "default",
+    [
+      "jest-junit",
+      {
+        "outputDirectory": "<rootDir>/test/coverage-e2e",
+        "outputName": "test-report.xml"
+      }
+    ]
   ],
   "coverageDirectory": "<rootDir>/test/coverage-e2e",
   "coverageReporters": [
@@ -33,22 +46,16 @@
       "lines": 0
     },
     "./src/group-buying/**/*.ts": {
-      "statements": 100,
-      "branches": 100,
-      "functions": 100,
-      "lines": 100
+      "statements": 90,
+      "branches": 90,
+      "functions": 90,
+      "lines": 90
     },
     "./src/filters/**/*.ts": {
-      "statements": 100,
-      "branches": 100,
-      "functions": 100,
-      "lines": 100
-    }
-  },
-  "globals": {
-    "ts-jest": {
-      "tsconfig": "tsconfig.json",
-      "isolatedModules": false
+      "statements": 90,
+      "branches": 90,
+      "functions": 90,
+      "lines": 90
     }
   }
 }

@@ -14,6 +14,8 @@ export class AppService {
   async getOrder(id: string, accessToken: string) {
     const apiURL = `http://localhost:3001/error`;
     console.log('apiURL', apiURL);
+    console.log('accessToken', accessToken);
+    console.log('id', id);
     const response = await this.httpService.axiosRef.get(apiURL);
     return response.data;
   }

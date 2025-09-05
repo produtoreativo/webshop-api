@@ -5,13 +5,13 @@ import {
   Param,
   Post,
   Query,
-  UseGuards,
+  // UseGuards,
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import OrderDto from './OrderDto';
-import { ApiBearerAuth } from '@nestjs/swagger';
+// import { ApiBearerAuth } from '@nestjs/swagger';
 import { GetUserToken } from './auth/get-user-token.decorator';
-import { AuthGuard } from './auth/auth.guard';
+// import { AuthGuard } from './auth/auth.guard';
 
 @Controller()
 export class AppController {
@@ -52,6 +52,7 @@ export class AppController {
     @GetUserToken() accessToken: string,
     @Param('id') orderId: string,
   ) {
+    console.log('Glenio:', { accessToken, orderId });
     throw new Error('This is a test error from Glenio');
   }
 
