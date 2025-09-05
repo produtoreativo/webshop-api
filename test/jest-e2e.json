@@ -1,14 +1,54 @@
 {
   "moduleFileExtensions": ["js", "json", "ts"],
-  "rootDir": ".",
+  "rootDir": "..",
   "testEnvironment": "node",
   "testRegex": ".e2e-spec.ts$",
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
   },
-  "setupFilesAfterEnv": ["<rootDir>/jest.setup.ts"],
+  "setupFilesAfterEnv": ["<rootDir>/test/jest.setup.ts"],
   "moduleNameMapper": {
-    "@config/(.*)$": "<rootDir>/../src/config/$1",
-    "@group-buying/(.*)$": "<rootDir>/../src/group-buying/$1"
+    "@config/(.*)$": "<rootDir>/src/config/$1",
+    "@group-buying/(.*)$": "<rootDir>/src/group-buying/$1"
+  },
+  "collectCoverage": true,
+  "collectCoverageFrom": [
+    "<rootDir>/src/**/*.ts",
+    "!<rootDir>/src/**/*.module.ts",
+    "!<rootDir>/src/main.ts",
+    "!<rootDir>/src/**/*.spec.ts"
+  ],
+  "coverageDirectory": "<rootDir>/test/coverage-e2e",
+  "coverageReporters": [
+    "text",
+    "lcov",
+    "json",
+    "html"
+  ],
+  "coverageThreshold": {
+    "global": {
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "./src/group-buying/**/*.ts": {
+      "statements": 100,
+      "branches": 100,
+      "functions": 100,
+      "lines": 100
+    },
+    "./src/filters/**/*.ts": {
+      "statements": 100,
+      "branches": 100,
+      "functions": 100,
+      "lines": 100
+    }
+  },
+  "globals": {
+    "ts-jest": {
+      "tsconfig": "tsconfig.json",
+      "isolatedModules": false
+    }
   }
 }

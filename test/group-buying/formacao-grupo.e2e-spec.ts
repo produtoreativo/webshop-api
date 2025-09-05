@@ -4,10 +4,10 @@ import * as request from 'supertest';
 import { AppModule } from './../../src/app.module';
 import orderConfig from '@config/order.config';
 import { GroupBuyingService } from '@group-buying/group-buying.service';
-import { response } from 'express';
 
 describe(`
   Value Stream: Formação de Grupos de Compra
+  Fluxo de Criação de Grupos
   `, () => {
   let app: INestApplication;
   let service: GroupBuyingService;
