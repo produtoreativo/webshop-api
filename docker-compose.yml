@@ -3,7 +3,7 @@ version: '3.8'
 services:
   datadog:
     image: datadog/agent:latest
-    container_name: datadog-agent
+    container_name: dd-agent-webshop
     environment:
       - DD_API_KEY=${DD_API_KEY}       # forneça via .env ou direto no ambiente
       - DD_SITE=datadoghq.com          # ou datadoghq.eu, us3, etc.
