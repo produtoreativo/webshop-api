@@ -52,6 +52,17 @@ docker compose up -d
 
 ## Versão para publicação no K8s
 
+Executar o setup para criar um Registry no seu K8S
+
+```sh
+chmod +x setup-registry.sh 
+./setup-registry.sh
+
+# habilitar acesso de fora do k8s
+kubectl port-forward -n registry pod/registry 5000:5000 >/tmp/registry-forward.log 2>&1 &
+# Verificar o catalogo
+curl -s http://127.0.0.1:5000/v2/_catalog 
+```
 
 Build da imagem
 
@@ -76,6 +87,7 @@ curl -i -X POST "http://localhost:3000/group-buying" \
   -d '{"userId":"trigger-500","items":[{"productId":"p1","qty":2}]}'
 ```
 
+### Instalar o DD no K8s
 
   ```sh
 # Adiciona o repo do DD
@@ -105,4 +117,35 @@ kubectl get secret datadog-api-key -n observability -o jsonpath='{.data.api-key}
 helm uninstall datadog-agent -n observability
 kubectl delete secret datadog-api-key -n observability
 kubectl delete ns observability --ignore-not-found=true
+```
+
+### Instalar a App no K8S
+
+```sh
+kubectl create secret generic webshop-api-secrets \
+  --from-literal=DD_API_KEY=$DD_API_KEY$ \
+  --from-literal=DD_AGENT_HOST=localhost \
+  --from-literal=DD_TRACE_AGENT_PORT=8126 \
+  --from-literal=DD_ENV=development \
+  --from-literal=DD_SERVICE=webshop-api \
+  --from-literal=DD_VERSION=1.0.0
+
+kubectl create configmap webshop-api-config \
+  --from-literal=MAGENTO_URL=http://localhost:8080 \
+  --from-literal=ORDER_MGMT_API_URL=http://localhost:4010/order/group
+
+
+kubectl get secrets webshop-api-secrets -o yaml
+kubectl get configmap webshop-api-config -o yaml
+
+
+kubectl apply -f webshop-api-deployment.yaml
+kubectl get pods
+kubectl describe pod webshop-api-9ccbbf86f-5ztxm
+
+```
+
+Caso precise destruir tudo
+```sh
+kubectl delete deployment webshop-api
 ```
