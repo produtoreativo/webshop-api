@@ -50,5 +50,59 @@ Execute o Docker compose para subir o agente
 docker compose up -d
 ```
 
+## Versão para publicação no K8s
 
 
+Build da imagem
+
+```sh
+# export DD_API_KEY=
+docker build -t webshop-api:1.1.3 .
+
+docker run -it --rm -p 3000:3000 \
+  -e MAGENTO_URL=http://localhost:8080 \
+  -e ORDER_MGMT_API_URL=http://localhost:4010/order/group \
+  -e DD_API_KEY=$DD_API_KEY \
+  -e DD_AGENT_HOST=localhost \
+  -e DD_TRACE_AGENT_PORT=8126 \
+  -e DD_ENV=development \
+  -e DD_SERVICE=webshop-api \
+  -e DD_VERSION=1.0.0 \
+  webshop-api:1.1.3
+
+# para testar se está mandando logs e erros para o DD
+curl -i -X POST "http://localhost:3000/group-buying" \          
+  -H "Content-Type: application/json" \
+  -d '{"userId":"trigger-500","items":[{"productId":"p1","qty":2}]}'
+```
+
+
+  ```sh
+# Adiciona o repo do DD
+helm repo add datadog https://helm.datadoghq.com
+helm repo update
+
+# Cria namespace para facilitar o isolamento e controle
+kubectl create namespace observability
+kubectl create secret generic datadog-api-key \
+  --from-literal api-key=$DD_API_KEY \
+  -n observability
+# Instala o agente no namespace
+helm install datadog-agent -f datadog-values.yaml datadog/datadog -n observability
+
+#datadog-values.yaml
+#datadog:
+# apiKeyExistingSecret: datadog-api-key
+# clusterName: colima
+# site: datadoghq.com
+
+# verificar a secret
+kubectl get secret datadog-api-key -n observability -o yaml
+# Verifica o valor da secret
+kubectl get secret datadog-api-key -n observability -o jsonpath='{.data.api-key}' | base64 --decode
+
+# destroy caso necessario
+helm uninstall datadog-agent -n observability
+kubectl delete secret datadog-api-key -n observability
+kubectl delete ns observability --ignore-not-found=true
+```
