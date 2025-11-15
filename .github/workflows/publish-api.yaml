@@ -56,3 +56,11 @@ jobs:
             -H "Content-Type: application/yaml" \
             -H "X-Registry-ArtifactId: webshop-api-${{ inputs.api_version }}" \
             --data-binary @./docs/swagger.yaml
+
+      # -------------------------
+      # Passo 3: Publicar no Kong Gateway
+      # -------------------------
+      - name: Publish to Kong Gateway
+        run: |
+          deck file openapi2kong --spec ./docs/swagger.yaml --output-file ./docs/kong.yaml
+          deck sync --config ./docs/kong.yaml

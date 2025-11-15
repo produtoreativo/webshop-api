@@ -167,6 +167,12 @@ curl -X POST \
   --data-binary @./docs/swagger.yaml
 ```
 
+Quando precisar consultar ou baixar uma versão
+```sh
+curl -s http://localhost:8085/apis/registry/v2/groups/webshop/artifacts/webshop-api-1.0.0
+```
+
+
 Executar a pipeline local
 ```sh
 act workflow_dispatch -j publish-api \
@@ -200,4 +206,36 @@ Instalar o Deck fornecido pelo Long
 curl -Lo deck.tar.gz https://github.com/Kong/deck/releases/download/v1.53.1/deck_1.53.1_darwin_all.tar.gz
 tar -xzf deck.tar.gz
 sudo mv deck /usr/local/bin/
+```
+
+Traduzir o OpenAPI para o Kong
+```sh
+deck file openapi2kong --spec ./docs/swagger.yaml --output-file ./docs/kong.yaml
+```
+
+Publicar as rotas
+```sh
+deck sync --state ./docs/kong.yaml
+```
+
+Quando precisar ajustar ou testar algo manualmente
+```sh
+# Criar rota se não existir
+curl -s -X PUT "http://localhost:8001/services/webshop-api/routes/webshop-route" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "paths": ["/webshop"],
+    "strip_path": true,
+    "methods": ["GET","POST","PUT","DELETE","PATCH"]
+  }'
+
+# Enviar o swagger via plugin que só tem no Enterprise
+curl -X POST "http://localhost:8001/services/webshop-api/plugins" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "oas3",
+    "config": {
+      "spec": "'"$(sed 's/"/\\"/g' ./doc/swagger.yaml)"'"
+    }
+  }'
 ```
