@@ -153,3 +153,14 @@ Caso preciso exportar a imagem para subir manualmente
 ```sh
 docker save webshop-api:1.1.3 -o webshop-api_1.1.3.tar
 ```
+
+
+## Aula 9: API Management
+
+Executar a pipeline local
+
+```sh
+act workflow_dispatch -j publish-api \
+  -P ubuntu-latest=node:22-bullseye \
+  --container-architecture linux/amd64
+```
