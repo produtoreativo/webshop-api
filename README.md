@@ -164,3 +164,11 @@ act workflow_dispatch -j publish-api \
   -P ubuntu-latest=node:22-bullseye \
   --container-architecture linux/amd64
 ```
+
+```sh
+curl -X POST \
+  "http://localhost:8085/apis/registry/v2/groups/webshop/artifacts" \
+  -H "Content-Type: application/yaml" \
+  -H "X-Registry-ArtifactId: webshop-api" \
+  --data-binary @./docs/swagger.yaml
+```
