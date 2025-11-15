@@ -175,3 +175,29 @@ act workflow_dispatch -j publish-api \
   -s apicurio_url=http://localhost:8085 
   -s api_version=1.1.1
 ```
+
+Executar a publicação do Kong manualmente
+```sh
+curl -s -X PUT "http://localhost:8001/services/webshop-api" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "webshop-api",
+    "protocol": "http",
+    "host": "localhost",
+    "port": 3000,
+    "path": "/",
+    "retries": 5,
+    "connect_timeout": 60000,
+    "read_timeout": 60000,
+    "write_timeout": 60000
+  }'
+
+curl -s http://localhost:8001/services 
+```
+
+Instalar o Deck fornecido pelo Long
+```sh
+curl -Lo deck.tar.gz https://github.com/Kong/deck/releases/download/v1.53.1/deck_1.53.1_darwin_all.tar.gz
+tar -xzf deck.tar.gz
+sudo mv deck /usr/local/bin/
+```
