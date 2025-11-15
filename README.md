@@ -157,18 +157,21 @@ docker save webshop-api:1.1.3 -o webshop-api_1.1.3.tar
 
 ## Aula 9: API Management
 
-Executar a pipeline local
 
-```sh
-act workflow_dispatch -j publish-api \
-  -P ubuntu-latest=node:22-bullseye \
-  --container-architecture linux/amd64
-```
-
+Publicar manualmente para testar o Registry
 ```sh
 curl -X POST \
   "http://localhost:8085/apis/registry/v2/groups/webshop/artifacts" \
   -H "Content-Type: application/yaml" \
-  -H "X-Registry-ArtifactId: webshop-api" \
+  -H "X-Registry-ArtifactId: webshop-api-1.0.0" \
   --data-binary @./docs/swagger.yaml
+```
+
+Executar a pipeline local
+```sh
+act workflow_dispatch -j publish-api \
+  -P ubuntu-latest=node:22-bullseye \
+  --container-architecture linux/amd64 \
+  -s apicurio_url=http://localhost:8085 
+  -s api_version=1.1.1
 ```

@@ -2,7 +2,24 @@ name: Publish API Contract Pipeline
 
 on: 
   workflow_dispatch:
+    inputs:
+      apicurio_url:
+        description: "URL do Apicurio Registry"
+        required: true
+        default: "http://localhost:8085"
+      api_version:
+        description: "Versão da API"
+        required: true
+        default: "1.0.0"
+
   workflow_call:
+    inputs:
+      apicurio_url:
+        type: string
+        required: true
+      api_version:
+        type: string
+        required: true
 
 jobs:
   publish-api:
@@ -28,3 +45,14 @@ jobs:
 
       - name: Generate Swagger (OpenAPI)
         run: yarn generate:api
+
+      # -------------------------
+      # Passo 2: Publicar no Apicurio Registry
+      # -------------------------
+      - name: Publish to Apicurio Registry
+        run: |
+          curl -X POST \
+            "${{ inputs.apicurio_url }}/apis/registry/v2/groups/webshop/artifacts" \
+            -H "Content-Type: application/yaml" \
+            -H "X-Registry-ArtifactId: webshop-api-${{ inputs.api_version }}" \
+            --data-binary @./docs/swagger.yaml
