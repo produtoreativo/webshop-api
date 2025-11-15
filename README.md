@@ -2,7 +2,7 @@
 
 ### O que muda nessa abordagem?
 
-O ideal é sempre 
+Pipeline de integração síncrona e assíncrona
 
 ### Executar o Sonar localmente
 
@@ -141,11 +141,15 @@ kubectl get configmap webshop-api-config -o yaml
 
 kubectl apply -f webshop-api-deployment.yaml
 kubectl get pods
-kubectl describe pod webshop-api-9ccbbf86f-5ztxm
-
+kubectl describe pod webshop-api-7f8dc7b498-tdl2n
 ```
 
 Caso precise destruir tudo
 ```sh
 kubectl delete deployment webshop-api
+```
+
+Caso preciso exportar a imagem para subir manualmente
+```sh
+docker save webshop-api:1.1.3 -o webshop-api_1.1.3.tar
 ```
