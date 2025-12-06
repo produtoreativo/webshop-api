@@ -1,6 +1,6 @@
 {
   "name": "webshop-api",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "",
   "author": "",
   "private": true,
@@ -9,7 +9,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
-    "start:dev": "nest start --watch -r tsconfig-paths/register",
+    "start:dev": "nest start --watch -r tsconfig-paths/register --entryFile main",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "start:watch:dd2": "npm run start:dev --entryFile main.with-dd",

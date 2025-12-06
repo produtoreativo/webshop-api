@@ -5,8 +5,8 @@ services:
   name: webshop-api
   path: /
   plugins: []
-  port: 443
-  protocol: https
+  port: 3000
+  protocol: http
   routes:
   - id: 6f8c6d8e-a952-5f24-872e-a7e859322959
     methods:
@@ -54,6 +54,16 @@ services:
     name: webshop-api_groupbuyingcontroller-create
     paths:
     - ~/group-buying$
+    plugins: []
+    regex_priority: 200
+    strip_path: false
+    tags: []
+  - id: 2e2f303a-cb3d-5e70-a54b-5229fa6a981c
+    methods:
+    - POST
+    name: webshop-api_appcontroller-getkeycloaktest
+    paths:
+    - ~/keycloak-test$
     plugins: []
     regex_priority: 200
     strip_path: false

@@ -1,0 +1,22 @@
+services:
+  webshop-api:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: webshop-api
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: development
+      MAGENTO_URL: http://localhost:8080
+      ORDER_MGMT_API_URL: http://localhost:4010/order/group
+    volumes:
+      - .:/app        # ← Live reload
+      - /app/node_modules  # ← Usa node_modules do container
+    command: yarn start:dev
+    networks:
+      - magasiara
+
+networks:
+  magasiara:
+    external: true

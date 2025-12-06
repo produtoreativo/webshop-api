@@ -5,6 +5,7 @@ import {
   Param,
   Post,
   Query,
+  Req,
   // UseGuards,
 } from '@nestjs/common';
 import { AppService } from './app.service';
@@ -69,6 +70,15 @@ export class AppController {
       timestamp: new Date().toISOString(),
       message: 'Hello from Glenio!',
       status: 'success',
+    };
+  }
+
+  @Post('keycloak-test')
+  async getKeycloakTest(@Req() req: any, @Body() body: any) {
+    return {
+      headers: req.headers,
+      body: body,
+      message: 'Keycloak test endpoint reached successfully',
     };
   }
 }

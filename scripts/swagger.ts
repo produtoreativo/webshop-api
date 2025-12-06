@@ -11,6 +11,7 @@ async function generateSwagger() {
     .setDescription('Documentação da API com Swagger')
     .setVersion('1.0')
     .addBearerAuth()
+    .addServer('http://localhost:3000')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

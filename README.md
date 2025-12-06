@@ -68,7 +68,7 @@ Build da imagem
 
 ```sh
 # export DD_API_KEY=
-docker build -t webshop-api:1.1.3 .
+docker build -t webshop-api:1.2.0 .
 
 docker run -it --rm -p 3000:3000 \
   -e MAGENTO_URL=http://localhost:8080 \
@@ -79,7 +79,7 @@ docker run -it --rm -p 3000:3000 \
   -e DD_ENV=development \
   -e DD_SERVICE=webshop-api \
   -e DD_VERSION=1.0.0 \
-  webshop-api:1.1.3
+  webshop-api:1.2.0
 
 # para testar se está mandando logs e erros para o DD
 curl -i -X POST "http://localhost:3000/group-buying" \          
