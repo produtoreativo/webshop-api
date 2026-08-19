@@ -55,7 +55,7 @@ Framework não depende delas. Ver [`local/README.md`](local/README.md).
 
 | Skill | Propósito | Link |
 |---|---|---|
-| `webshop-api-local-testing` | Execução e validação de testes locais do webshop-api | [local/webshop-api-local-testing/SKILL.md](local/webshop-api-local-testing/SKILL.md) |
+| `webshop-api-local-testing` | Execução e validação de testes locais da webshop-api | [local/webshop-api-local-testing/SKILL.md](local/webshop-api-local-testing/SKILL.md) |
 
 ## Referências de engenharia
 
