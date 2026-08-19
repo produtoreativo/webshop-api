@@ -7,6 +7,7 @@ import { GlobalHttpModule } from './global-http/global-http.module';
 import { ConfigModule } from '@nestjs/config';
 import { GroupBuyingModule } from './group-buying/group-buying.module';
 import orderConfig from '@config/order.config';
+import { CatalogoModule } from './catalogo/catalogo.module';
 
 const isTest = process.env.NODE_ENV === 'test' || process.env.DD_ENV === 'test';
 @Module({
@@ -43,6 +44,7 @@ const isTest = process.env.NODE_ENV === 'test' || process.env.DD_ENV === 'test';
     GlobalHttpModule,
     AuthModule,
     GroupBuyingModule,
+    CatalogoModule,
   ],
   controllers: [AppController],
   providers: [AppService],

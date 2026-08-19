@@ -4,12 +4,19 @@ import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AllExceptionsFilter } from './filters/all-exceptions.filter';
 import { ConfigService } from '@nestjs/config';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { bufferLogs: true });
   app.useLogger(app.get(Logger));
   app.useGlobalInterceptors(new LoggerErrorInterceptor());
   app.useGlobalFilters(new AllExceptionsFilter());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      errorHttpStatusCode: 422,
+    }),
+  );
   app.enableCors();
 
   const config = new DocumentBuilder()
